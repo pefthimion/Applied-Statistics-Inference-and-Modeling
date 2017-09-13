@@ -1,0 +1,268 @@
+# PCA on Voice Recognition
+# Phillip Efthimion
+
+# Input Data
+
+voice <- read.csv("/Users/Phillip/Downloads/voice.csv", sep=",", header = TRUE)
+names(voice)
+head(voice$label)
+str(voice)
+
+
+
+#################
+# Transformation#
+#################
+
+# meanfreq. No transformation improves normality
+
+hist(voice$meanfreq)
+voice$log_meanfreq <- log10(voice$meanfreq)
+voice$sqrt_meanfreq <- (voice$meanfreq)^0.5
+voice$inv_meanfreq <- 1 / (voice$meanfreq)
+hist(voice$log_meanfreq)
+hist(voice$sqrt_meanfreq)
+hist(voice$inv_meanfreq)
+
+# sd. No transformation improves normality
+
+hist(voice$sd)
+voice$log_sd <- log10(voice$sd)
+voice$sqrt_sd <- (voice$sd)^0.5
+voice$inv_sd <- 1 / (voice$sd)
+hist(voice$log_sd)
+hist(voice$sqrt_sd)
+hist(voice$inv_sd)
+
+# median. No transformation improves normality
+
+hist(voice$median)
+voice$log_median <- log10(voice$median)
+voice$sqrt_median <- (voice$median)^0.5
+voice$inv_median <- 1 / (voice$median)
+hist(voice$log_median)
+hist(voice$sqrt_median)
+hist(voice$inv_median)
+
+# Q25. No transformation improves normality
+
+hist(voice$Q25)
+voice$log_Q25 <- log10(voice$Q25)
+voice$sqrt_Q25 <- (voice$Q25)^0.5
+voice$inv_Q25 <- 1 / (voice$Q25)
+hist(voice$log_Q25)
+hist(voice$sqrt_Q25)
+hist(voice$inv_Q25)
+
+# Q75. No transformation improves normality. None look normal.
+
+hist(voice$Q75)
+voice$log_Q75 <- log10(voice$Q75)
+voice$sqrt_Q75 <- (voice$Q75)^0.5
+voice$inv_Q75 <- 1 / (voice$Q75)
+hist(voice$log_Q75)
+hist(voice$sqrt_Q75)
+hist(voice$inv_Q75)
+
+# IQR. Inverse transformation helps improve normality 
+
+hist(voice$IQR)
+voice$log_IQR <- log10(voice$IQR)
+voice$sqrt_IQR <- (voice$IQR)^0.5
+voice$inv_IQR <- 1 / (voice$IQR)
+hist(voice$log_IQR)
+hist(voice$sqrt_IQR)
+hist(voice$inv_IQR)
+
+# skew. Log transformation helps improve normality.
+
+hist(voice$skew)
+voice$log_skew <- log10(voice$skew)
+voice$sqrt_skew <- (voice$skew)^0.5
+voice$inv_skew <- 1 / (voice$skew)
+hist(voice$log_skew)
+hist(voice$sqrt_skew)
+hist(voice$inv_skew)
+
+# kurt. Inverse transformation helps improve normality.
+
+hist(voice$kurt)
+voice$log_kurt <- log10(voice$kurt)
+voice$sqrt_kurt <- (voice$kurt)^0.5
+voice$inv_kurt <- 1 / (voice$kurt)
+hist(voice$log_kurt)
+hist(voice$sqrt_kurt)
+hist(voice$inv_kurt)
+
+# sp.ent. SQRT transformation helps improve normality
+
+hist(voice$sp.ent)
+voice$log_sp.ent <- log10(voice$sp.ent)
+voice$sqrt_sp.ent <- (voice$sp.ent)^0.5
+voice$inv_sp.ent <- 1 / (voice$sp.ent)
+hist(voice$log_sp.ent)
+hist(voice$sqrt_sp.ent)
+hist(voice$inv_sp.ent)
+
+# Mode. No transformation improves normality.
+
+hist(voice$mode)
+voice$log_mode <- log10(voice$mode)
+voice$sqrt_mode <- (voice$mode)^0.5
+voice$inv_mode <- 1 / (voice$mode)
+hist(voice$log_mode)
+hist(voice$sqrt_mode)
+hist(voice$inv_mode)
+
+# Centroid. No transformation improves normality.
+
+hist(voice$centroid)
+voice$log_centroid <- log10(voice$centroid)
+voice$sqrt_centroid <- (voice$centroid)^0.5
+voice$inv_centroid <- 1 / (voice$centroid)
+hist(voice$log_centroid)
+hist(voice$sqrt_centroid)
+hist(voice$inv_centroid)
+
+# Meanful. o transformation improves normality.
+
+hist(voice$meanfun)
+voice$log_meanfun <- log10(voice$meanfun)
+voice$sqrt_meanfun <- (voice$meanfun)^0.5
+voice$inv_meanfun <- 1 / (voice$meanfun)
+hist(voice$log_meanfun)
+hist(voice$sqrt_meanfun)
+hist(voice$inv_meanfun)
+
+# minion. No transformation improves normality
+
+hist(voice$minfun)
+voice$log_minfun <- log10(voice$minfun)
+voice$sqrt_minfun <- (voice$minfun)^0.5
+voice$inv_minfun <- 1 / (voice$minfun)
+hist(voice$log_minfun)
+hist(voice$sqrt_minfun)
+hist(voice$inv_minfun)
+
+# max fun. invlog best transformation.
+
+hist(voice$maxfun)
+voice$log_maxfun <- log10(voice$maxfun)
+voice$sqrt_maxfun <- (voice$maxfun)^0.5
+voice$inv_maxfun <- 1 / (voice$maxfun)
+hist(voice$log_maxfun)
+hist(voice$sqrt_maxfun)
+hist(voice$inv_maxfun)
+voice$inv_log_maxfun <- 1 / (log10(voice$maxfun))
+hist(voice$inv_log_maxfun)
+
+# meandom. SQRT transformation best 
+
+hist(voice$meandom)
+voice$log_meandom <- log10(voice$meandom)
+voice$sqrt_meandom <- (voice$meandom)^0.5
+voice$inv_meandom <- 1 / (voice$meandom)
+hist(voice$log_meandom)
+hist(voice$sqrt_meandom)
+hist(voice$inv_meandom)
+
+# mindom. log transform.
+
+hist(voice$mindom)
+voice$log_mindom <- log10(voice$mindom)
+voice$sqrt_mindom <- (voice$mindom)^0.5
+voice$inv_mindom <- 1 / (voice$mindom)
+hist(voice$log_mindom)
+hist(voice$sqrt_mindom)
+hist(voice$inv_mindom)
+
+# maxdom. SQRT transformation.
+
+hist(voice$maxdom)
+voice$log_maxdom <- log10(voice$maxdom)
+voice$sqrt_maxdom <- (voice$maxdom)^0.5
+voice$inv_maxdom <- 1 / (voice$maxdom)
+hist(voice$log_maxdom)
+hist(voice$sqrt_maxdom)
+hist(voice$inv_maxdom)
+
+# dfrange. SQRT transformation
+
+hist(voice$dfrange)
+voice$log_dfrange <- log10(voice$dfrange)
+voice$sqrt_dfrange <- (voice$dfrange)^0.5
+voice$inv_dfrange <- 1 / (voice$dfrange)
+hist(voice$log_dfrange)
+hist(voice$sqrt_dfrange)
+hist(voice$inv_dfrange)
+
+# modindx. LOG transformation.
+
+hist(voice$modindx)
+
+voice$modindx <- voice$modindx + 1
+
+voice$log_modindx <- log10(voice$modindx)
+voice$sqrt_modindx <- (voice$modindx)^0.5
+voice$inv_modindx <- 1 / (voice$modindx)
+hist(voice$log_modindx)
+hist(voice$sqrt_modindx)
+hist(voice$inv_modindx)
+
+##################
+##################
+
+# Convert labels male & female to 0 & 1
+
+voice$gender[1:1584] <- 1
+voice$gender[1585:3168] <- 0
+
+
+# add 1 to $modindx so we can take the log transformation
+voice$modindx <- voice$modindx + 1
+
+voice2 <- voice[, c("meanfreq", "sd", "median", "Q25", "Q75", "inv_IQR", "log_skew", "inv_kurt", "sqrt_sp.ent", "mode", "sfm", "centroid", "meanfun", "minfun", "inv_log_maxfun", "sqrt_meandom", "log_mindom", "sqrt_maxdom", "sqrt_dfrange", "log_modindx", "gender")]
+
+voice_x <- voice_x[, -21]
+names(voice_x)
+
+pca_x <- princomp(voice_x, cor = T)
+plot(pca_x, type = "l")
+summary(pca, loadings = T)
+
+comp1 <- pca_x$scores[,1]
+comp2 <- pca_x$scores[,2]
+comp3 <- pca_x$scores[,3]
+ 
+pclm <- lm(voice2$gender ~ comp1 + comp2 + comp3)
+summary.lm(pclm, correlation = T)
+
+rawlm <- lm(voice2$gender ~ ., data = voice_x)
+summary.lm(rawlm, correlation = T)
+
+pclm.res <- resid(pclm)
+plot(voice2$gender, pclm.res)
+plot(voice2$meanfreq, pclm.res)
+plot(voice2$sd, pclm.res)
+plot(comp1, pclm.res)
+plot(comp2, pclm.res)
+plot(comp3, pclm.res)
+plot(comp4, pclm.res)
+plot(comp5, pclm.res)
+
+# Unused
+
+# pca <- princomp(voice, cor = T)
+# summary(pca, loadings = T)
+
+# plot(pca, type = "l")
+
+
+
+
+
+
+
+
+
+
