@@ -1,0 +1,74 @@
+Wine <- read.csv("/Users/Phillip/Downloads/WhiteWineData.csv", sep = ",", header = TRUE)
+summary(Wine)
+
+**
+White <- read.csv("/Users/Phillip/Downloads/WhiteWineData.csv", sep = ",", header = TRUE)
+Red <- read.csv("/Users/Phillip/Downloads/RedWineData.csv", sep = ",", header = TRUE)
+White$color=0
+Red$color=1
+Wine <- rbind(White, Red)
+**
+
+model1 <- lm(quality ~ fixed.acidity + volatile.acidity + citric.acid + residual.sugar + chlorides + free.sulfur.dioxide + total.sulfur.dioxide + density + pH + sulphates + alcohol + color, data = Wine)
+summary(model1)
+
+library(ggplot2)
+p1 <- ggplot(Wine, aes(Wine$quality, Wine$free.sulfur.dioxide)) + geom_boxplot()
+p1
+
+max(Wine$free.sulfur.dioxide)
+match(289, Wine$free.sulfur.dioxide)
+Wine[4746,]
+Wine2 <- Wine[-c(4746),]
+p2 <- ggplot(Wine2, aes(Wine2$quality, Wine2$free.sulfur.dioxide)) + geom_boxplot()
+p2
+
+library(car)
+vif(model1)
+outlierTest(model1)
+
+White$log_volatile.acidity <- log10(White$volatile.acidity)
+White$log_residual.sugar <- log10(White$residual.sugar)
+White$log_chlorides <- log10(White$chlorides)
+White$log_free.sulfur.dioxide <- log10(White$free.sulfur.dioxide)
+
+model_2 <- lm(quality ~ fixed.acidity + citric.acid + total.sulfur.dioxide + density + pH + sulphates + alcohol +log_volatile.acidity + log_residual.sugar + log_chlorides + log_free.sulfur.dioxide, data = White)
+
+summary(model_2)
+
+
+
+
+White$sq_fixed.acidity <- White$fixed.acidity^2
+White$sq_volatile.acidity <- White$volatile.acidity^2
+White$sq_citric.acid <- White$citric.acid^2
+White$sq_residual.sugar <- White$residual.sugar^2
+White$sq_chlorides <- White$chlorides^2
+White$sq_free.sulfur.dioxide <- White$free.sulfur.dioxide^2
+White$sq_total.sulfur.dioxide <- White$total.sulfur.dioxide^2
+White$sq_density <- White$density^2
+White$sq_pH <- White$pH^2
+White$sq_sulphates <- White$sulphates^2
+White$sq_alcohol <- White$alcohol^2
+
+model_sq <- lm(quality ~ fixed.acidity + volatile.acidity + citric.acid + residual.sugar + chlorides + free.sulfur.dioxide + total.sulfur.dioxide + density + pH + alcohol + sq_fixed.acidity + sq_volatile.acidity + sq_citric.acid + sq_residual.sugar + sq_chlorides + sq_free.sulfur.dioxide + sq_total.sulfur.dioxide + sq_density + sq_pH + sq_alcohol, data=White)
+
+summary(model_sq)
+
+
+White$tri_fixed.acidity <- White$fixed.acidity^3
+White$tri_volatile.acidity <- White$volatile.acidity^3
+White$tri_citric.acid <- White$citric.acid^3
+White$tri_residual.sugar <- White$residual.sugar^3
+White$tri_chlorides <- White$chlorides^3
+White$tri_free.sulfur.dioxide <- White$free.sulfur.dioxide^3
+White$tri_total.sulfur.dioxide <- White$total.sulfur.dioxide^3
+White$tri_density <- White$density^3
+White$tri_pH <- White$pH^3
+White$tri_sulphates <- White$sulphates^3
+White$tri_alcohol <- White$alcohol^3
+
+model_tri <- lm(quality ~ fixed.acidity + volatile.acidity + citric.acid + residual.sugar + chlorides + free.sulfur.dioxide + total.sulfur.dioxide + density + pH + alcohol + sq_fixed.acidity + sq_volatile.acidity + sq_citric.acid + sq_residual.sugar + sq_chlorides + sq_free.sulfur.dioxide + sq_total.sulfur.dioxide + sq_density + sq_pH + sq_alcohol, tri_fixed.acidity + tri_volatile.acidity + tri_citric.acid + tri_residual.sugar + tri_chlorides + tri_free.sulfur.dioxide + tri_total.sulfur.dioxide + tri_density + tri_pH + tri_alcohol, data=White)
+
+
+
